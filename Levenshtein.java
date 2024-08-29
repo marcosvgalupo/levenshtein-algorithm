@@ -22,13 +22,16 @@ public class Levenshtein {
                 }
 
                 else{
-                    int cost = (s1.charAt(i - 1) == s2.charAt(j - 1)) ? 0 : 1;
 
                     int up = table[i -1][j];
                     int left = table[i][j - 1];
                     int diagonal = table[i - 1][j - 1];
 
-                    table[i][j] = min3(up + 1, left + 1, diagonal + cost);
+                    if(s1.charAt(i - 1) == s2.charAt(j - 1)){
+                        table[i][j] = diagonal;
+                    } else{
+                        table[i][j] = min3(up + 1, left + 1, diagonal + 1);
+                    }
                 }
             }
         }
@@ -39,10 +42,10 @@ public class Levenshtein {
 
     public static void main(String[] args) {
 
-        String s1 = "cama";
-        String s2 = "caixa";
+        String s1 = "bad";
+        String s2 = "bed";
         int distance = compute_distance(s1, s2);
 
-        System.out.println("The distance between " + s1 + " and " + s2 + " is: " + distance);
+        System.out.println("The distance between \"" + s1 + "\" and \"" + s2 + "\" is: " + distance);
     }
 }
